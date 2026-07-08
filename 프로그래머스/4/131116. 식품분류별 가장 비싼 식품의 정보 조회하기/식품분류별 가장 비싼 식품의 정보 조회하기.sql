@@ -1,0 +1,19 @@
+-- 코드를 입력하세요
+SELECT
+    f.CATEGORY,
+    f.PRICE AS MAX_PRICE,
+    f.PRODUCT_NAME
+FROM FOOD_PRODUCT f
+JOIN (
+    SELECT
+        CATEGORY,
+        MAX(PRICE) AS MAX_PRICE
+    FROM FOOD_PRODUCT
+    WHERE CATEGORY IN ('과자', '국', '김치', '식용유')
+    GROUP BY CATEGORY
+) m
+    ON f.CATEGORY = m.CATEGORY
+   AND f.PRICE = m.MAX_PRICE
+WHERE f.CATEGORY IN ('과자', '국', '김치', '식용유')
+ORDER BY
+    f.PRICE DESC;
