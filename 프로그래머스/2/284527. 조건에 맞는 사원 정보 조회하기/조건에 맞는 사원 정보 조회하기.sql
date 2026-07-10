@@ -1,0 +1,23 @@
+-- 코드를 작성해주세요
+WITH EMP_SCORE AS (
+    SELECT
+        EMP_NO,
+        SUM(SCORE) AS SCORE
+    FROM HR_GRADE
+    WHERE YEAR = 2022
+    GROUP BY EMP_NO
+)
+
+SELECT
+    s.SCORE,
+    e.EMP_NO,
+    e.EMP_NAME,
+    e.POSITION,
+    e.EMAIL
+FROM EMP_SCORE s
+JOIN HR_EMPLOYEES e
+    ON s.EMP_NO = e.EMP_NO
+WHERE s.SCORE = (
+        SELECT MAX(SCORE)
+        FROM EMP_SCORE
+);
